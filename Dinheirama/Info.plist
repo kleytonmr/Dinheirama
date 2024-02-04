@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Permissão da Câmera -->
+    <key>NSCameraUsageDescription</key>
+    <string>Esta aplicação precisa de acesso à câmera para tirar fotos e reconhecimento de texto.</string>
+
+    <!-- Permissão da Biblioteca de Fotos -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Esta aplicação precisa de acesso à biblioteca de fotos para selecionar imagens.</string>
+
+    <!-- ... Outras configurações do Info.plist ... -->
+</dict>
+</plist>

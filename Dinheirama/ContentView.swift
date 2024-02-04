@@ -1,4 +1,6 @@
 import SwiftUI
+import AVFoundation
+import Vision
 
 // Interface
 struct Item: Identifiable {
@@ -9,7 +11,7 @@ struct Item: Identifiable {
 
 struct ItemView: View {
     var item: Item
-
+    
     var body: some View {
         HStack {
             Text(item.name)
@@ -26,19 +28,33 @@ struct ItemView: View {
 }
 
 struct ButtonlView: View {
+    @State private var isImagePickerPresented: Bool = false
+    @State private var scannedTexts: [String] = []
+    @State private var isCameraActive: Bool = true
+    
     var body: some View {
         VStack {
-            Button("Adicionar Item") {
-                // Código para adicionar um novo item
+            Button(action: {
+                isImagePickerPresented.toggle()
+                isCameraActive = true
+            }) {
+                HStack {
+                    Image(systemName: "camera")
+                    Text("Adicionar Item")
+                }
+                .padding()
+                .foregroundColor(.white)
+                .background(Color(red: 0.818, green: 0.652, blue: 0.218))
+                .cornerRadius(10)
+                .fontWeight(.bold)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.black, lineWidth: 1)
+                )
             }
-            .padding()
-            .foregroundColor(.white)
-            .background(Color(red: 0.818, green: 0.652, blue: 0.218))
-            .cornerRadius(10)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.black, lineWidth: 1) // Adiciona uma borda curva preta de 1 ponto
-            )
+            .sheet(isPresented: $isImagePickerPresented) {
+                ImagePickerView(scannedTexts: $scannedTexts, isCameraActive: $isCameraActive)
+            }
         }
         .frame(width: 200)
     }
@@ -80,7 +96,7 @@ struct ContentView: View {
         Item(name: "Name of Item 1", value: 10.0),
         Item(name: "Name of Item 1", value: 10.0),
     ]
-
+    
     var body: some View {
         NavigationView {
             List {
@@ -112,9 +128,84 @@ struct ContentView: View {
             )
         }
     }
-
+    
     private func deleteItem(at offsets: IndexSet) {
         items.remove(atOffsets: offsets)
+    }
+}
+
+struct ImagePickerView: UIViewControllerRepresentable {
+    @Binding var scannedTexts: [String]
+    @Binding var isCameraActive: Bool
+
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+        var parent: ImagePickerView
+
+        init(parent: ImagePickerView) {
+            self.parent = parent
+        }
+
+        func imagePickerController(_ picker: UIImagePickerController,
+                                   didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+            if let uiImage = info[.originalImage] as? UIImage {
+                processImage(uiImage)
+            }
+
+            parent.presentationMode.wrappedValue.dismiss()
+        }
+
+        func processImage(_ image: UIImage) {
+            guard let cgImage = image.cgImage else { return }
+
+            let requestHandler = VNImageRequestHandler(cgImage: cgImage)
+
+            do {
+                let request = VNRecognizeTextRequest(completionHandler: { request, error in
+                    if let error = error {
+                        print("Error in recognizing text: \(error.localizedDescription)")
+                        return
+                    }
+
+                    if let results = request.results as? [VNRecognizedTextObservation] {
+                        let recognizedTexts = results.compactMap { observation in
+                            observation.topCandidates(1).first?.string
+                        }.filter { $0.count >= 5 }
+
+                        DispatchQueue.main.async {
+                            self.parent.scannedTexts.append(contentsOf: recognizedTexts)
+                        }
+                    }
+                })
+
+                try requestHandler.perform([request])
+            } catch {
+                print("Error in processing image: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    @Environment(\.presentationMode) var presentationMode
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(parent: self)
+    }
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePickerView>) -> UIImagePickerController {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = context.coordinator
+
+        if isCameraActive {
+            imagePicker.sourceType = .camera
+            imagePicker.cameraCaptureMode = .photo
+        } else {
+            imagePicker.sourceType = .photoLibrary
+        }
+
+        return imagePicker
+    }
+
+    func updateUIViewController(_ uiViewController: UIImagePickerController,
+                                context: UIViewControllerRepresentableContext<ImagePickerView>) {
     }
 }
 

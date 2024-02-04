@@ -11,6 +11,7 @@
 		7FA4A1382B6E9BE800D2973C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4A1372B6E9BE800D2973C /* ContentView.swift */; };
 		7FA4A13A2B6E9BEA00D2973C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA4A1392B6E9BEA00D2973C /* Assets.xcassets */; };
 		7FA4A13D2B6E9BEA00D2973C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA4A13C2B6E9BEA00D2973C /* Preview Assets.xcassets */; };
+		7FA5A6972B6EF93600E7EE29 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA5A6962B6EF93600E7EE29 /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		7FA4A1372B6E9BE800D2973C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7FA4A1392B6E9BEA00D2973C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7FA4A13C2B6E9BEA00D2973C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7FA5A6962B6EF93600E7EE29 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				7FA4A1352B6E9BE800D2973C /* DinheiramaApp.swift */,
 				7FA4A1372B6E9BE800D2973C /* ContentView.swift */,
+				7FA5A6962B6EF93600E7EE29 /* File.swift */,
 				7FA4A1392B6E9BEA00D2973C /* Assets.xcassets */,
 				7FA4A13B2B6E9BEA00D2973C /* Preview Content */,
 			);
@@ -138,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FA4A1382B6E9BE800D2973C /* ContentView.swift in Sources */,
+				7FA5A6972B6EF93600E7EE29 /* File.swift in Sources */,
 				7FA4A1362B6E9BE800D2973C /* DinheiramaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,6 +279,8 @@
 				DEVELOPMENT_TEAM = 25NK4A8Y7Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Esta aplicação precisa de acesso à câmera para tirar fotos e reconhecimento de texto.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Esta aplicação precisa de acesso à biblioteca de fotos para selecionar imagens.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -304,6 +310,8 @@
 				DEVELOPMENT_TEAM = 25NK4A8Y7Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Esta aplicação precisa de acesso à câmera para tirar fotos e reconhecimento de texto.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Esta aplicação precisa de acesso à biblioteca de fotos para selecionar imagens.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
